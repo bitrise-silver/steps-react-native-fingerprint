@@ -22,7 +22,7 @@ func parsePaths(raw string) []string {
 }
 
 // withKeyPrefix prepends prefix to fingerprint to form the final cache key,
-// e.g. "rn-build-skip" + "abc123..." -> "rn-build-skip-abc123...". An empty
+// e.g. "build-fingerprint" + "abc123..." -> "build-fingerprint-abc123...". An empty
 // prefix leaves the fingerprint unchanged.
 func withKeyPrefix(prefix, fingerprint string) string {
 	if prefix == "" {

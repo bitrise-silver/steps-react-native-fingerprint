@@ -34,7 +34,7 @@ inputs:
   - key_prefix:
     opts:
       title: "Cache key prefix"
-      summary: Namespace prepended to the fingerprint, e.g. "rn-build-skip" -> BUNDLE_HASH_STRING=rn-build-skip-<fingerprint>.
+      summary: Namespace prepended to the fingerprint, e.g. "build-fingerprint" -> BUNDLE_HASH_STRING=build-fingerprint-<fingerprint>.
       description: |
         Optional. When set, it's prepended to the fingerprint (joined with a `-`) to form `BUNDLE_HASH_STRING`. Useful for namespacing the cache key per platform/workflow so different builds don't collide on the same key.
       is_required: false

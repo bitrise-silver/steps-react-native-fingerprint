@@ -67,7 +67,7 @@ func TestWithKeyPrefix(t *testing.T) {
 	if got, want := withKeyPrefix("", "abc123"), "abc123"; got != want {
 		t.Fatalf("got %q, want %q", got, want)
 	}
-	if got, want := withKeyPrefix("rn-build-skip", "abc123"), "rn-build-skip-abc123"; got != want {
+	if got, want := withKeyPrefix("build-fingerprint", "abc123"), "build-fingerprint-abc123"; got != want {
 		t.Fatalf("got %q, want %q", got, want)
 	}
 }
