@@ -16,8 +16,7 @@ This is a lightweight, do-it-yourself pattern. For a fully managed, compilation-
 
 | Env var | Description |
 | --- | --- |
-| `BUNDLE_HASH_STRING` | The dependency fingerprint, prefixed with `key_prefix` if set. Always set. Use as the key for `restore-cache` / `save-cache` steps. |
-| `BUNDLE_CACHE_FOUND` | `"true"` if a Bitrise key-value cache entry exists for `BUNDLE_HASH_STRING`, `"false"` otherwise. Only checks existence — the cache entry is not downloaded. |
+| `BUNDLE_HASH_STRING` | The dependency fingerprint, prefixed with `key_prefix` if set. Always set. Use as the key for `restore-cache` / `save-cache`; gate the build on restore-cache's `BITRISE_CACHE_HIT`. |
 
 
 Runnable end-to-end examples:
@@ -33,7 +32,7 @@ go build ./...
 go test ./... -v
 ```
 
-The hashing logic is pure functions with no Bitrise dependencies, so the unit tests run anywhere. Output export uses `envman`, which is present on Bitrise stacks. The `BUNDLE_CACHE_FOUND` check calls Bitrise's key-value cache service directly, so it needs the `BITRISEIO_ABCS_API_URL` / `BITRISEIO_BITRISE_SERVICES_ACCESS_TOKEN` secrets that are only available in an actual Bitrise CI build.
+The hashing logic is pure functions with no Bitrise dependencies, so the unit tests run anywhere. Output export uses `envman`, which is present on Bitrise stacks. Cache hit/miss is determined by the following `restore-cache` step via its `BITRISE_CACHE_HIT` output — the fingerprint step itself makes no network calls.
 
 ## License
 

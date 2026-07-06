@@ -1,8 +1,6 @@
 package main
 
 import (
-	"net/http"
-	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"testing"
@@ -71,44 +69,6 @@ func TestWithKeyPrefix(t *testing.T) {
 	}
 	if got, want := withKeyPrefix("rn-build-skip", "abc123"), "rn-build-skip-abc123"; got != want {
 		t.Fatalf("got %q, want %q", got, want)
-	}
-}
-
-func TestCacheKeyExists(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Header.Get("Authorization") != "Bearer test-token" {
-			t.Errorf("missing/incorrect Authorization header: %q", r.Header.Get("Authorization"))
-		}
-		switch r.URL.Query().Get("cache_keys") {
-		case "hit-key":
-			w.WriteHeader(http.StatusOK)
-			_, _ = w.Write([]byte(`{"url":"https://example.com/should-not-be-fetched","matched_cache_key":"hit-key"}`))
-		case "miss-key":
-			w.WriteHeader(http.StatusNotFound)
-		default:
-			w.WriteHeader(http.StatusInternalServerError)
-		}
-	}))
-	defer server.Close()
-
-	found, err := cacheKeyExists(server.URL, "test-token", "hit-key")
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if !found {
-		t.Fatal("expected cache hit to report found=true")
-	}
-
-	found, err = cacheKeyExists(server.URL, "test-token", "miss-key")
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-	if found {
-		t.Fatal("expected cache miss to report found=false")
-	}
-
-	if _, err := cacheKeyExists(server.URL, "test-token", "error-key"); err == nil {
-		t.Fatal("expected error for unexpected status code")
 	}
 }
 

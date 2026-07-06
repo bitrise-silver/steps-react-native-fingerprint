@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/bitrise-io/go-steputils/stepconf"
 	"github.com/bitrise-io/go-steputils/tools"
@@ -42,22 +41,8 @@ func main() {
 		failf("Failed to export BUNDLE_HASH_STRING: %s", err)
 	}
 
-	apiBaseURL := os.Getenv("BITRISEIO_ABCS_API_URL")
-	accessToken := os.Getenv("BITRISEIO_BITRISE_SERVICES_ACCESS_TOKEN")
-	if apiBaseURL == "" || accessToken == "" {
-		failf("Bitrise key-value cache service is not available: BITRISEIO_ABCS_API_URL / BITRISEIO_BITRISE_SERVICES_ACCESS_TOKEN is not set. This step must run on Bitrise CI.")
-	}
-
-	found, err := cacheKeyExists(apiBaseURL, accessToken, hashString)
-	if err != nil {
-		failf("Failed to check cache: %s", err)
-	}
-	if err := tools.ExportEnvironmentWithEnvman("BUNDLE_CACHE_FOUND", strconv.FormatBool(found)); err != nil {
-		failf("Failed to export BUNDLE_CACHE_FOUND: %s", err)
-	}
-
 	fmt.Println()
-	log("Fingerprint : BUNDLE_HASH_STRING=%s", hashString)
-	log("Cache found : BUNDLE_CACHE_FOUND=%t", found)
+	log("Exported BUNDLE_HASH_STRING=%s", hashString)
+	log("Use it as the restore-cache / save-cache key; gate the build on restore-cache's BITRISE_CACHE_HIT.")
 	os.Exit(0)
 }
