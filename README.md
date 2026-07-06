@@ -22,8 +22,8 @@ This is a lightweight, do-it-yourself pattern. For a fully managed, compilation-
 
 Runnable end-to-end examples:
 
-- Bare React Native — <https://github.com/bitrise-silver/react-native-build-skip-demo>
-- Expo — <https://github.com/bitrise-silver/expo-build-skip-demo>
+- Bare React Native — <https://github.com/bitrise-silver/react-native-build-fingerprint-demo>
+- Expo — <https://github.com/bitrise-silver/expo-build-fingerprint>
 
 ## Development
 
