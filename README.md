@@ -19,9 +19,8 @@ This is a lightweight, do-it-yourself pattern. For a fully managed, compilation-
 | `BUNDLE_HASH_STRING` | The dependency fingerprint, prefixed with `key_prefix` if set. Always set. Use as the key for `restore-cache` / `save-cache`; gate the build on restore-cache's `BITRISE_CACHE_HIT`. |
 
 
-Runnable end-to-end examples:
+Runnable end-to-end example:
 
-- Bare React Native — <https://github.com/bitrise-silver/react-native-build-fingerprint-demo>
 - Expo — <https://github.com/bitrise-silver/expo-build-fingerprint-demo>
 
 ## Development
